@@ -10,4 +10,13 @@
 
 @interface ChildImageView : UIImageView
 
+
+/**
+ *  图片震动
+ *
+ *  @param
+ *  @param
+ *  @param
+ */
+- (void)shake;
 @end

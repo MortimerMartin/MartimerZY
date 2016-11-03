@@ -10,4 +10,14 @@
 
 @interface ZYButton : UIButton
 
+
+/**
+ *  防止btn多次点击
+ *
+ *  @param action  方法名
+ *  @param
+ *  @param event 触发的事件
+ */
+
+- (void)sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event;
 @end

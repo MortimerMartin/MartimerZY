@@ -7,7 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface PP_PopOrPush : NSObject
+// 写个枚举判断使用的场景 Pop 还是 Push
+
+typedef NS_OPTIONS(NSInteger, AnimatedScene) {
+
+    AnimatedScenePush = 0,
+    AnimatedScenePop,
+    AnimatedScenePresent,
+    AnimatedSceneDissmiss
+    
+};
+@interface PP_PopOrPush : NSObject<UIViewControllerAnimatedTransitioning>
+
+- (instancetype)initWithStytle:(AnimatedScene)scene;
 
 @end

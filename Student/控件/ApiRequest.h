@@ -10,4 +10,11 @@
 
 @interface ApiRequest : YTKRequest
 
+
+@property (nonatomic, strong) NSString *httpMethod;
+@property (nonatomic, strong) NSString *requestUrl;
+@property (nonatomic, strong) NSDictionary *requestParamters;
+
++ (instancetype)doRequest:(NSString *)requestUrl withParameter:(NSDictionary *)parameters;
+
 @end

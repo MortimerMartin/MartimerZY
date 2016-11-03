@@ -11,3 +11,13 @@
 @interface Saber : Profession
 
 @end
+
+
+@interface Saber (Override)
+
+- (Profession *)buildStrength:(NSInteger)strength;
+- (Profession *)buildStamina:(NSInteger)stamina;
+- (Profession *)buildIntelligence:(NSInteger)intelligence;
+- (Profession *)buildAgility:(NSInteger)agility;
+
+@end

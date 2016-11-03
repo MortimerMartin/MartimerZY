@@ -8,6 +8,12 @@
 
 #import "ZYButton.h"
 
+@interface ZYButton ()
+
+@property (nonatomic , assign) BOOL flag;
+
+@end
+
 @implementation ZYButton
 
 /*
@@ -17,5 +23,23 @@
     // Drawing code
 }
 */
+
+- (void)sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event{
+
+    if (!self.flag) {
+        [super sendAction:action to:target forEvent:event];
+        self.flag = !self.flag;
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.flag = !self.flag;
+        });
+        
+    } else {
+    
+        return ;
+    }
+
+}
+
 
 @end

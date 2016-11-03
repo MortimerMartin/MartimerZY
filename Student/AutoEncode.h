@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AutoEncode : NSObject
+@interface AutoEncode : NSObject<NSCoding>
 
+@property (nonatomic , copy) NSString * name;
+
+@property (nonatomic , copy) NSString * sex;
+
+@property (nonatomic , assign) NSInteger userID;
+
+- (void)saveInfo;
+
+- (AutoEncode *)readInfo;
 @end

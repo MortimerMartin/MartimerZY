@@ -10,4 +10,17 @@
 
 @implementation ApiRequest
 
+
++ (instancetype)doRequest:(NSString *)requestUrl withParameter:(NSDictionary *)parameters
+{
+
+    ApiRequest *request = [[ApiRequest alloc]init];
+    
+    request.requestParamters = parameters;
+    
+    request.requestUrl = requestUrl;
+    
+    return request;
+}
+
 @end

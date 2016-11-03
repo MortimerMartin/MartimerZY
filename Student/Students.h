@@ -8,6 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Students : NSObject
+@interface Students : NSObject<NSCoding>
+
+@property (nonatomic , assign) NSInteger number;
+
+@property (nonatomic , copy) NSString * name;
+
+@property (nonatomic , copy) NSString * sex;
+
+
++ (void)saveStudents:(Students *)student;
+
++ (Students *)loadData;
 
 @end
