@@ -6,6 +6,8 @@
 //  Copyright © 2016年 pro. All rights reserved.
 //
 
+
+
 #import "ViewController.h"
 #import "Students.h"
 #import "Person.h"
@@ -27,6 +29,39 @@
 #import "ApiRequest.h"
 #import "AFNetworking.h"
 #import "YTKNetworkAgent.h"
+
+
+#define ZFFuncLog ZFLog(@"%s",__func__)
+
+//自定义log
+
+#ifdef DEBUG//调试
+
+# define ZFLog(fmt, ...) NSLog((@"%s [Line %d]"fmt),__PRETTY_FUNCTION__,__LINE__, ##__VA_ARGS__);//在这里写了分号ZFFuncLog就不用写分号了
+
+#else//发布阶段
+
+#define ZFlog(...)
+
+#endif
+
+
+//1.1Printing while in the debug model and pop an alert.模式下打印日志,当前行并弹出一个警告
+
+#ifdef DEBUG
+
+#define ULog(fmt, ...) { UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%s\n [Line %d] ", __PRETTY_FUNCTION__, __LINE__] message:[NSString stringWithFormat:fmt, ##__VA_ARGS__] delegate:nil cancelButtonTitle:@"Ok"otherButtonTitles:nil]; [alert show]; }
+
+#else
+
+#   define ULog(...)
+
+#endif
+
+// rgb颜色转换（16进制->10进制）
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue &0xFF0000) >>16))/255.0 green:((float)((rgbValue &0xFF00) >>8))/255.0 blue:((float)(rgbValue &0xFF))/255.0 alpha:1.0]
+#define COLOR_666               UIColorFromRGB(0x666666)
+
 @interface ViewController ()<PersonDelegate,UIViewControllerTransitioningDelegate,UINavigationControllerDelegate>
 
 @property (nonatomic , strong) ChildImageView * chileImg;
@@ -45,9 +80,32 @@
 //    [self initObject];
 
 //     [self setUpVideoPlayView];
-//    UIImageView * img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)];
-//    [self.view addSubview:img];
+
 //
+
+        UIImageView * img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)];
+        [self.view addSubview:img];
+
+
+
+  
+    //获取手机的uuid
+//    NSUUID * uuid = [UIDevice currentDevice].identifierForVendor;
+//    NSString * uuids = uuid.UUIDString;
+   
+//    [self clipViewToDocument];
+//    [self MoBoLiImage];;
+  
+    // Do any additional setup after loading the view, typically from a nib.
+}
+
+
+
+- (void)loadHttpsData{
+
+    //    UIImageView * img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)];
+    //    [self.view addSubview:img];
+
     // 1.获得请求管理者
     AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
     // 设置请求格式
@@ -62,55 +120,65 @@
     
     [mgr POST:@"http://sale.degjsm.cn/EDearWork/services/api/mobileManager/doQueryWork" parameters:dict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-       
-//        NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-//        NSDictionary * dict1 = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-//        NSDictionary * dict2 = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
-    
-          } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        //        NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        //        NSDictionary * dict1 = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        //        NSDictionary * dict2 = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"%@",error);
     }];
-    UITextView * text = [[UITextView alloc] initWithFrame:CGRectMake(0, 100, self.view.cl_width, 300)];
-    
-    NSString * string = @"3680u*&$##^/n";
-    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@"@／：；（）¥「」＂、[]{}#%-*+=_\\|~＜＞$€^•'@#$%^&*()_+'\""];
-    NSString *trimmedString = [string stringByTrimmingCharactersInSet:set];
-    
-    
-    NSLog(@"%@",trimmedString);
-    
-//    YTKNetworkAgent * agent = [YTKNetworkAgent sharedAgent];
-//    [agent setValue:[NSSet setWithObjects:@"application/json", @"text/plain", @"text/javascript", @"text/json",@"text/html",@"text/css", nil] forKeyPath:@"_manager.responseSerializer.acceptableContentTypes"];
-//    //AFNet支持Https 测试环境下忽略https证书。。
-//        [agent setValue:@NO forKeyPath:@"_manager.securityPolicy.allowInvalidCertificates"];
-    
-//    [agent addRequest:request];
-    
-//    NSDictionary *dict = @{};
-//    ApiRequest *request = [ApiRequest doRequest:@"https://ubmcmm.baidustatic.com/media/v1/0f000KgfXCLgov0kMJ-UOf.jpg" withParameter:dict];
-//    
-// 
-//    [request startWithCompletionBlockWithSuccess:^(YTKBaseRequest *request) {
-//        
-//  
-//        NSLog(@"SUCCESS");
-//        
-//
-//        
-//    } failure:^(YTKBaseRequest *request) {
-//        
-//    }];
-
-    //获取手机的uuid
-//    NSUUID * uuid = [UIDevice currentDevice].identifierForVendor;
-//    NSString * uuids = uuid.UUIDString;
    
-//    [self clipViewToDocument];
-//    [self MoBoLiImage];;
-  
-    // Do any additional setup after loading the view, typically from a nib.
-}
+    
+    
+    
+    
+    
+    
+    
+    
+//    UITextView * text = [[UITextView alloc] initWithFrame:CGRectMake(0, 100, self.view.cl_width, 300)];
+//    
+//    NSString * string = @"3680u*&$##^/n";
+//    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@"@／：；（）¥「」＂、[]{}#%-*+=_\\|~＜＞$€^•'@#$%^&*()_+'\""];
+//    NSString *trimmedString = [string stringByTrimmingCharactersInSet:set];
+//    
+//    
+//    NSLog(@"%@",trimmedString);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
+    //    YTKNetworkAgent * agent = [YTKNetworkAgent sharedAgent];
+    //    [agent setValue:[NSSet setWithObjects:@"application/json", @"text/plain", @"text/javascript", @"text/json",@"text/html",@"text/css", nil] forKeyPath:@"_manager.responseSerializer.acceptableContentTypes"];
+    //    //AFNet支持Https 测试环境下忽略https证书。。
+    //        [agent setValue:@NO forKeyPath:@"_manager.securityPolicy.allowInvalidCertificates"];
+    
+    //    [agent addRequest:request];
+    
+    //    NSDictionary *dict = @{};
+    //    ApiRequest *request = [ApiRequest doRequest:@"https://ubmcmm.baidustatic.com/media/v1/0f000KgfXCLgov0kMJ-UOf.jpg" withParameter:dict];
+    //
+    //
+    //    [request startWithCompletionBlockWithSuccess:^(YTKBaseRequest *request) {
+    //
+    //
+    //        NSLog(@"SUCCESS");
+    //
+    //
+    //        
+    //    } failure:^(YTKBaseRequest *request) {
+    //        
+    //    }];
+
+}
 - (void)setUpVideoPlayView{
 
     self.playView = [CLAVPlayerView videoPlayView];
@@ -261,10 +329,11 @@
     
     
     NSLog(@"%@%@%ld",sts.name,sts.sex,sts.number);
-    
-    
+//    ZFLog(@"%@%@%ld",sts.name,sts.sex,sts.number);
+//    ULog(@"%@%@%ld",sts.name,sts.sex,sts.number);
     st = nil;
     sts = nil;
+    
     
     
     
